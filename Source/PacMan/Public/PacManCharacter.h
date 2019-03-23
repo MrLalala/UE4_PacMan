@@ -38,6 +38,18 @@ public:
 	void MoveXAxis(float);
 	void MoveYAxis(float);
 
+	// 碰撞函数
+	/*
+		UPrimitiveComponent:
+		AActor:碰撞的类
+		UPrimitiveComponent:
+		int:
+		bool: 是不是扫荡(一般用不到)
+		FHitResult: 扫荡的结果(一般用不到)
+	*/
+	UFUNCTION()
+	void OnCollision(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 private:
 	// 当前速度
 	FVector current;

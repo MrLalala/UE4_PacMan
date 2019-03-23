@@ -5,6 +5,8 @@
 #include "PacManGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
+#include "Public/Collectables.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 APacManCharacter::APacManCharacter()
@@ -19,6 +21,9 @@ void APacManCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	this->GameMode = Cast<APacManGameModeBase>(UGameplayStatics::GetGameMode(this));
+
+	//绑定碰撞事件
+	this->GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APacManCharacter::OnCollision);
 }
 
 // Called every frame
@@ -33,9 +38,11 @@ void APacManCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// 绑定移动事件
 	PlayerInputComponent->BindAxis("MoveX", this, &APacManCharacter::MoveXAxis);
 	PlayerInputComponent->BindAxis("MoveY", this, &APacManCharacter::MoveYAxis);
 
+	// 绑定按键事件
 	PlayerInputComponent->BindAction("Restart", IE_Released, this, &APacManCharacter::_Restart);
 	PlayerInputComponent->BindAction("Pause", IE_Released, this, &APacManCharacter::_Pause);
 	PlayerInputComponent->BindAction("NewGame", IE_Released, this, &APacManCharacter::_NewGame);
@@ -53,6 +60,20 @@ void APacManCharacter::MoveYAxis(float AxisValue)
 {
 	current.Y = AxisValue;
 	AddMovementInput(current);
+}
+
+void APacManCharacter::OnCollision(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (GameMode->GetCurrentState() == EGameState::EPlaying)
+	{
+		// 如果碰撞体是食物
+		if (OtherActor->IsA(ACollectables::StaticClass()))
+		{
+			OtherActor->Destroy();
+			
+		}
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Collision %d"), OtherBodyIndex);
 }
 
 void APacManCharacter::_Restart()
