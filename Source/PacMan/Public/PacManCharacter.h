@@ -50,6 +50,9 @@ public:
 	UFUNCTION()
 	void OnCollision(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	// 死亡处理
+	void Killed();
+
 private:
 	// 当前速度
 	FVector current;
@@ -59,4 +62,6 @@ private:
 	int CollectablesToEat = 0;
 	// 生命值
 	int Lives;
+	// 出生点
+	FVector StartPos;
 };

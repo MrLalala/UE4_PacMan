@@ -14,8 +14,6 @@ APacManCharacter::APacManCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +31,13 @@ void APacManCharacter::BeginPlay()
 		CollectablesToEat++;
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Total CollectablesToEat:%d"), CollectablesToEat);
+
+	//初始生命值
+	Lives = 3;
+
+	// 获取初始位置
+	StartPos = GetActorLocation();
+	UE_LOG(LogTemp, Warning, TEXT("My Pos:%s"), *StartPos.ToString());
 }
 
 // Called every frame
@@ -120,3 +125,17 @@ void APacManCharacter::_NewGame()
 	UE_LOG(LogTemp, Warning, TEXT("NewGame Click"));
 }
 
+
+void APacManCharacter::Killed()
+{
+	// 生命值--
+	--Lives;
+	if (Lives == 0)
+	{
+		this->GameMode->SetCurrentState(EGameState::EGameOver);
+	}
+	else
+	{
+		SetActorLocation(StartPos);
+	}
+}
