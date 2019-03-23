@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "PacManCharacter.generated.h"
 
+class APacManGameModeBase;
+
 UCLASS()
 class PACMAN_API APacManCharacter : public ACharacter
 {
@@ -18,6 +20,11 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	// 按键事件函数
+	void _Restart();
+	void _Pause();
+	void _NewGame();
 
 public:	
 	// Called every frame
@@ -34,4 +41,5 @@ public:
 private:
 	// 当前速度
 	FVector current;
+	APacManGameModeBase* GameMode;
 };

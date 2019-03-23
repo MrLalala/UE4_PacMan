@@ -2,3 +2,7 @@
 
 #include "PacManGameModeBase.h"
 
+void APacManGameModeBase::SetCurrentState(EGameState state)
+{
+	this->GameState = state;
+}

@@ -7,11 +7,32 @@
 #include "PacManGameModeBase.generated.h"
 
 /**
- * 
+ * 游戏规则定义
  */
+
+enum class EGameState: short
+{
+	EMenu,
+	EPlaying,
+	EPause,
+	EWin,
+	EGameOver
+};
+
+
 UCLASS()
 class PACMAN_API APacManGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	EGameState GetCurrentState() const;
+	void SetCurrentState(EGameState);
+private:
+	EGameState GameState;
 };
+
+FORCEINLINE EGameState APacManGameModeBase::GetCurrentState() const
+{
+	return this->GameState;
+}
