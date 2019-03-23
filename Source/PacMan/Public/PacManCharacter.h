@@ -54,4 +54,9 @@ private:
 	// 当前速度
 	FVector current;
 	APacManGameModeBase* GameMode;
+
+	// 剩余食物数
+	int CollectablesToEat = 0;
+	// 生命值
+	int Lives;
 };

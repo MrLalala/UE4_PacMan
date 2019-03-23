@@ -6,3 +6,8 @@ void APacManGameModeBase::SetCurrentState(EGameState state)
 {
 	this->GameState = state;
 }
+
+void APacManGameModeBase::BeginPlay()
+{
+	this->SetCurrentState(EGameState::EPlaying);
+}

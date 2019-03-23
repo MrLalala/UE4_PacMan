@@ -7,12 +7,14 @@
 #include "Engine/World.h"
 #include "Public/Collectables.h"
 #include "Components/CapsuleComponent.h"
+#include "Public/EngineUtils.h"
 
 // Sets default values
 APacManCharacter::APacManCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 
 }
 
@@ -24,6 +26,13 @@ void APacManCharacter::BeginPlay()
 
 	//绑定碰撞事件
 	this->GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APacManCharacter::OnCollision);
+
+	//迭代器查找物体数量
+	for (TActorIterator<ACollectables> collIter(GetWorld()); collIter; ++collIter)
+	{
+		CollectablesToEat++;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Total CollectablesToEat:%d"), CollectablesToEat);
 }
 
 // Called every frame
@@ -70,10 +79,15 @@ void APacManCharacter::OnCollision(UPrimitiveComponent *HitComp, AActor *OtherAc
 		if (OtherActor->IsA(ACollectables::StaticClass()))
 		{
 			OtherActor->Destroy();
-			
+			CollectablesToEat--;
+			if (CollectablesToEat == 0)
+			{
+				GameMode->SetCurrentState(EGameState::EWin);
+			}
+			UE_LOG(LogTemp, Warning, TEXT("Remain:%d"), CollectablesToEat);
 		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Collision %d"), OtherBodyIndex);
+	
 }
 
 void APacManCharacter::_Restart()
