@@ -24,17 +24,17 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	// Í¨¹ıÖ¸¶¨UPROPERTYºêÀ´Ìí¼Ó¿É±à¼­ÊôĞÔ¡£
-	// EditDefaultsOnly: Ö»ÄÜ¶ÔÔ­ĞÍ½øĞĞĞŞ¸Ä
-	// Íø¸ñ×é¼ş, Ö¸¶¨ÎïÌåµÄĞÎ×´
+	// é€šè¿‡æŒ‡å®šUPROPERTYå®æ¥æ·»åŠ å¯ç¼–è¾‘å±æ€§ã€‚
+	// EditDefaultsOnly: åªèƒ½å¯¹åŸå‹è¿›è¡Œä¿®æ”¹
+	// ç½‘æ ¼ç»„ä»¶, æŒ‡å®šç‰©ä½“çš„å½¢çŠ¶
 	UPROPERTY(VisibleAnywhere, Category = Collectable)
 	UStaticMeshComponent* pCollectableMesh;
-	// Åö×²Ìå×é¼ş, Åö×²ÊÂ¼ş
+	// ç¢°æ’ä½“ç»„ä»¶, ç¢°æ’äº‹ä»¶
 	UPROPERTY(EditDefaultsOnly, Category = Collectable)
 	USphereComponent* pCollision;
 
-	// ³¬¼¶Ê³Îï±êÊ¶
-	// EditAnywhere£º¶ÔÔ­ĞÍºÍÊµÀıĞŞ¸Ä
+	// è¶…çº§é£Ÿç‰©æ ‡è¯†
+	// EditAnywhereï¼šå¯¹åŸå‹å’Œå®ä¾‹ä¿®æ”¹
 	UPROPERTY(EditAnyWhere, Category = Collectable)
 	bool bIsSuper = false;
 

@@ -21,7 +21,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// °´¼üÊÂ¼şº¯Êı
+	// æŒ‰é”®äº‹ä»¶å‡½æ•°
 	void _Restart();
 	void _Pause();
 	void _NewGame();
@@ -34,34 +34,34 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	// ÖáÓ³Éäº¯Êı
+	// è½´æ˜ å°„å‡½æ•°
 	void MoveXAxis(float);
 	void MoveYAxis(float);
 
-	// Åö×²º¯Êı
+	// ç¢°æ’å‡½æ•°
 	/*
 		UPrimitiveComponent:
-		AActor:Åö×²µÄÀà
+		AActor:ç¢°æ’çš„ç±»
 		UPrimitiveComponent:
 		int:
-		bool: ÊÇ²»ÊÇÉ¨µ´(Ò»°ãÓÃ²»µ½)
-		FHitResult: É¨µ´µÄ½á¹û(Ò»°ãÓÃ²»µ½)
+		bool: æ˜¯ä¸æ˜¯æ‰«è¡(ä¸€èˆ¬ç”¨ä¸åˆ°)
+		FHitResult: æ‰«è¡çš„ç»“æœ(ä¸€èˆ¬ç”¨ä¸åˆ°)
 	*/
 	UFUNCTION()
 	void OnCollision(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	// ËÀÍö´¦Àí
+	// æ­»äº¡å¤„ç†
 	void Killed();
 
 private:
-	// µ±Ç°ËÙ¶È
+	// å½“å‰é€Ÿåº¦
 	FVector current;
 	APacManGameModeBase* GameMode;
 
-	// Ê£ÓàÊ³ÎïÊı
+	// å‰©ä½™é£Ÿç‰©æ•°
 	int CollectablesToEat = 0;
-	// ÉúÃüÖµ
+	// ç”Ÿå‘½å€¼
 	int Lives;
-	// ³öÉúµã
+	// å‡ºç”Ÿç‚¹
 	FVector StartPos;
 };

@@ -8,31 +8,31 @@ ACollectables::ACollectables()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	// ³õÊ¼»¯Íâ¹ÛºÍÅö×²
-	// Í¨¹ıCreateDefaultSubsobject´´½¨¶ÔÏó
+	// åˆå§‹åŒ–å¤–è§‚å’Œç¢°æ’
+	// é€šè¿‡CreateDefaultSubsobjectåˆ›å»ºå¯¹è±¡
 	pCollectableMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("pMesh"));
 	pCollision = CreateDefaultSubobject<USphereComponent>(TEXT("pSphare"));
 
-	// ¿ªÆôÅö×²
+	// å¼€å¯ç¢°æ’
 	SetActorEnableCollision(true);
 
-	// °ó¶¨Íâ¹ÛºÍÅö×²Ìå»ı
+	// ç»‘å®šå¤–è§‚å’Œç¢°æ’ä½“ç§¯
 	pCollectableMesh->AttachTo(pCollision);
 
-	// ÉèÖÃÇòÌåÍâĞÎ
-	// TODO: ÎªÊ²Ã´ÕâÑùÓÃ£¿Í¨¹ı·´ÉäÕÒµ½¶ÔÓ¦µÄÀà
+	// è®¾ç½®çƒä½“å¤–å½¢
+	// TODO: ä¸ºä»€ä¹ˆè¿™æ ·ç”¨ï¼Ÿé€šè¿‡åå°„æ‰¾åˆ°å¯¹åº”çš„ç±»
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> sphere(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 
-	// Èç¹ûÕÒµÃµ½
+	// å¦‚æœæ‰¾å¾—åˆ°
 	if (sphere.Succeeded())
 	{
-		// Íâ¹Û°ó¶¨
+		// å¤–è§‚ç»‘å®š
 		pCollectableMesh->SetStaticMesh(sphere.Object);
 	}
 
-	// ÉèÖÃÍâ¹Û´óĞ¡?
+	// è®¾ç½®å¤–è§‚å¤§å°?
 	pCollectableMesh->SetWorldScale3D(FVector(0.3, 0.3, 0.3));
-	// ÉèÖÃÅö×²Ìå´óĞ¡
+	// è®¾ç½®ç¢°æ’ä½“å¤§å°
 	pCollision->SetSphereRadius(16);
 }
 

@@ -16,9 +16,9 @@ class PACMAN_API AAIEnemy : public AAIController
 	GENERATED_BODY()
 	
 public:
-	// AI开启时的初始化
+	// AI寮�鍚椂鐨勫垵濮嬪寲
 	void Possess(APawn *) override;
-	// 移动停止后的处理
+	// 绉诲姩鍋滄鍚庣殑澶勭悊
 	virtual void OnMoveCompleted(FAIRequestID , const FPathFollowingResult& ) override;
 
 	void SearchNewPoint();

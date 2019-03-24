@@ -12,7 +12,7 @@ void AAIEnemy::Possess(APawn* InPawn)
 
 	Bot = Cast<AEnemy>(InPawn);
 
-	// 获取初始位置
+	// 鑾峰彇鍒濆浣嶇疆
 	HomeLocation = Bot->GetActorLocation();
 
 	SearchNewPoint();

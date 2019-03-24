@@ -15,27 +15,27 @@ AEnemy::AEnemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	// ´´½¨Ò»¸ö×é¼ş
+	// åˆ›å»ºä¸€ä¸ªç»„ä»¶
 	EnemyBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
-	// ´´½¨Ñù×Ó
+	// åˆ›å»ºæ ·å­
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> NarrowCapsuleObject(TEXT("'/Game/StarterContent/Shapes/Shape_NarrowCapsule'"));
 
 	if (NarrowCapsuleObject.Succeeded())
 	{
 		EnemyBody->SetStaticMesh(NarrowCapsuleObject.Object);
 	}
-	// ÉèÖÃ´óĞ¡
+	// è®¾ç½®å¤§å°
 	EnemyBody->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
-	// µ÷ÕûÎïÌåÏà¶ÔÎ»ÖÃ
+	// è°ƒæ•´ç‰©ä½“ç›¸å¯¹ä½ç½®
 	EnemyBody->SetRelativeLocation(FVector(0, 0, -50.0f));
-	// °ó¶¨µ½Åö×²²¿¼şÉÏ
+	// ç»‘å®šåˆ°ç¢°æ’éƒ¨ä»¶ä¸Š
 	EnemyBody->SetupAttachment(RootComponent);
 
 	GetCapsuleComponent()->SetCapsuleRadius(25.0f);
 	GetCapsuleComponent()->SetCapsuleHalfHeight(50.0f);
 
 
-	// ÕÒµ½×Ô¶¨ÒåµÄ²ÄÖÊ
+	// æ‰¾åˆ°è‡ªå®šä¹‰çš„æè´¨
 	static ConstructorHelpers::FObjectFinder<UMaterial> M_Etable(TEXT("'/Game/Materials/M_Enemy_Eatable'"));
 	if (M_Etable.Succeeded())
 	{
@@ -53,7 +53,7 @@ void AEnemy::SetEtable()
 	bIsEatable = true;
 	EnemyBody->SetMaterial(0, EatableMaterial);
 
-	// ÉèÖÃ×î´óÒÆ¶¯ËÙ¶È
+	// è®¾ç½®æœ€å¤§ç§»åŠ¨é€Ÿåº¦
 	GetCharacterMovement()->MaxWalkSpeed = 50.0f;
 
 }
@@ -75,7 +75,7 @@ void AEnemy::SetUneatable()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	// »ñÈ¡µ±Ç°²ÄÖÊ:Index->0
+	// è·å–å½“å‰æè´¨:Index->0
 	DefaultMaterial = EnemyBody->GetMaterial(0);
 	
 	//SetEtable();

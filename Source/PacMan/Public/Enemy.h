@@ -26,22 +26,22 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	// µĞÈËÍâĞÎ×é¼ş
-	//UPROPERTY(·ÃÎÊÈ¨ÏŞ, Category=Àà±ğ)
+	// æ•Œäººå¤–å½¢ç»„ä»¶
+	//UPROPERTY(è®¿é—®æƒé™, Category=ç±»åˆ«)
 	UPROPERTY(VisibleAnywhere, Category=Body)
 	UStaticMeshComponent* EnemyBody;
 
 	void SetEtable();
 	void SetUneatable();
 
-	// ÉèÖÃÒÆ¶¯
+	// è®¾ç½®ç§»åŠ¨
 	void SetMove(bool);
-	// ËÀÍö»Øµ÷
+	// æ­»äº¡å›è°ƒ
 	void Killed();
-	// ³õÊ¼×´Ì¬
+	// åˆå§‹çŠ¶æ€
 	void ReArm();
 
-	// Åö×²´¦Àí
+	// ç¢°æ’å¤„ç†
 	UFUNCTION()
 	void OnCollision(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
@@ -52,11 +52,11 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = Body)
 	UMaterialInterface* EatableMaterial;
 
-	// ¶¨Ê±Æ÷ÈÎÎñ
+	// å®šæ—¶å™¨ä»»åŠ¡
 	FTimerHandle TimeEatable;
 
-	// µ±Ç°×´Ì¬
+	// å½“å‰çŠ¶æ€
 	bool bIsEatable = false;
-	// Éú´æ×´Ì¬
+	// ç”Ÿå­˜çŠ¶æ€
 	
 };

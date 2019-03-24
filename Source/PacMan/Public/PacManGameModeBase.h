@@ -7,7 +7,7 @@
 #include "PacManGameModeBase.generated.h"
 
 /**
- * 游戏规则定义
+ * 娓告垙瑙勫垯瀹氫箟
  */
 
 enum class EGameState: short

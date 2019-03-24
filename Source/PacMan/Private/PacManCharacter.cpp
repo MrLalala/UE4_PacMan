@@ -22,20 +22,20 @@ void APacManCharacter::BeginPlay()
 	Super::BeginPlay();
 	this->GameMode = Cast<APacManGameModeBase>(UGameplayStatics::GetGameMode(this));
 
-	//°ó¶¨Åö×²ÊÂ¼ş
+	//ç»‘å®šç¢°æ’äº‹ä»¶
 	this->GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APacManCharacter::OnCollision);
 
-	//µü´úÆ÷²éÕÒÎïÌåÊıÁ¿
+	//è¿­ä»£å™¨æŸ¥æ‰¾ç‰©ä½“æ•°é‡
 	for (TActorIterator<ACollectables> collIter(GetWorld()); collIter; ++collIter)
 	{
 		CollectablesToEat++;
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Total CollectablesToEat:%d"), CollectablesToEat);
 
-	//³õÊ¼ÉúÃüÖµ
+	//åˆå§‹ç”Ÿå‘½å€¼
 	Lives = 3;
 
-	// »ñÈ¡³õÊ¼Î»ÖÃ
+	// è·å–åˆå§‹ä½ç½®
 	StartPos = GetActorLocation();
 	UE_LOG(LogTemp, Warning, TEXT("My Pos:%s"), *StartPos.ToString());
 }
@@ -52,11 +52,11 @@ void APacManCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	// °ó¶¨ÒÆ¶¯ÊÂ¼ş
+	// ç»‘å®šç§»åŠ¨äº‹ä»¶
 	PlayerInputComponent->BindAxis("MoveX", this, &APacManCharacter::MoveXAxis);
 	PlayerInputComponent->BindAxis("MoveY", this, &APacManCharacter::MoveYAxis);
 
-	// °ó¶¨°´¼üÊÂ¼ş
+	// ç»‘å®šæŒ‰é”®äº‹ä»¶
 	PlayerInputComponent->BindAction("Restart", IE_Released, this, &APacManCharacter::_Restart);
 	PlayerInputComponent->BindAction("Pause", IE_Released, this, &APacManCharacter::_Pause);
 	PlayerInputComponent->BindAction("NewGame", IE_Released, this, &APacManCharacter::_NewGame);
@@ -66,7 +66,7 @@ void APacManCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 void APacManCharacter::MoveXAxis(float AxisValue)
 {
 	current.X = AxisValue;
-	// Êµ¼Ê¿ØÖÆÒÆ¶¯µÄº¯Êı
+	// å®é™…æ§åˆ¶ç§»åŠ¨çš„å‡½æ•°
 	AddMovementInput(current);
 }
 
@@ -80,7 +80,7 @@ void APacManCharacter::OnCollision(UPrimitiveComponent *HitComp, AActor *OtherAc
 {
 	if (GameMode->GetCurrentState() == EGameState::EPlaying)
 	{
-		// Èç¹ûÅö×²ÌåÊÇÊ³Îï
+		// å¦‚æœç¢°æ’ä½“æ˜¯é£Ÿç‰©
 		if (OtherActor->IsA(ACollectables::StaticClass()))
 		{
 			OtherActor->Destroy();
@@ -128,7 +128,7 @@ void APacManCharacter::_NewGame()
 
 void APacManCharacter::Killed()
 {
-	// ÉúÃüÖµ--
+	// ç”Ÿå‘½å€¼--
 	--Lives;
 	if (Lives == 0)
 	{
