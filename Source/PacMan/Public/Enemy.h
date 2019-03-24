@@ -30,4 +30,19 @@ public:
 	//UPROPERTY(访问权限, Category=类别)
 	UPROPERTY(VisibleAnywhere, Category=Body)
 	UStaticMeshComponent* EnemyBody;
+
+	void SetEtable();
+	void SetUneatable();
+
+private:
+	UPROPERTY(EditAnywhere, Category = Body)
+	UMaterialInterface* DefaultMaterial;
+	UPROPERTY(VisibleAnywhere, Category = Body)
+	UMaterialInterface* EatableMaterial;
+
+	// 定时器任务
+	FTimerHandle TimeEatable;
+
+	// 当前状态
+	bool bIsEatable = false;
 };

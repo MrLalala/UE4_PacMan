@@ -5,7 +5,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Classes/Engine/StaticMesh.h"
-
+#include "Classes/Materials/Material.h"
+#include "Engine/Public/TimerManager.h"
+#include "Classes/GameFramework/CharacterMovementComponent.h"
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -23,32 +25,70 @@ AEnemy::AEnemy()
 	}
 	// 设置大小
 	EnemyBody->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
-	EnemyBody->SetAllPhysicsPosition(FVector(0, 0, -50.0f));
+	// 调整物体相对位置
+	EnemyBody->SetRelativeLocation(FVector(0, 0, -50.0f));
 	// 绑定到碰撞部件上
 	EnemyBody->SetupAttachment(RootComponent);
 
 	GetCapsuleComponent()->SetCapsuleRadius(25.0f);
 	GetCapsuleComponent()->SetCapsuleHalfHeight(50.0f);
+
+
+	// 找到自定义的材质
+	static ConstructorHelpers::FObjectFinder<UMaterial> M_Etable(TEXT("'/Game/Materials/M_Enemy_Eatable'"));
+	if (M_Etable.Succeeded())
+	{
+		EatableMaterial = M_Etable.Object;
+	}
+}
+
+void AEnemy::SetEtable()
+{
+	GetWorldTimerManager().SetTimer(TimeEatable, this, &AEnemy::SetUneatable, 10.0f, false);
+	if (bIsEatable)
+	{
+		return;
+	}
+	bIsEatable = true;
+	EnemyBody->SetMaterial(0, EatableMaterial);
+
+	// 设置最大移动速度
+	GetCharacterMovement()->MaxWalkSpeed = 50.0f;
+
+}
+
+void AEnemy::SetUneatable()
+{
+	if (!bIsEatable)
+	{
+		return;
+	}
+	bIsEatable = false;
+	EnemyBody->SetMaterial(0, DefaultMaterial);
+	GetWorldTimerManager().ClearTimer(TimeEatable);
+
+	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
 }
 
 // Called when the game starts or when spawned
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	// 获取当前材质:Index->0
+	DefaultMaterial = EnemyBody->GetMaterial(0);
 	
+	//SetEtable();
 }
 
 // Called every frame
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
