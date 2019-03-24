@@ -34,6 +34,18 @@ public:
 	void SetEtable();
 	void SetUneatable();
 
+	// 设置移动
+	void SetMove(bool);
+	// 死亡回调
+	void Killed();
+	// 初始状态
+	void ReArm();
+
+	// 碰撞处理
+	UFUNCTION()
+	void OnCollision(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	bool bIsDied = false;
 private:
 	UPROPERTY(EditAnywhere, Category = Body)
 	UMaterialInterface* DefaultMaterial;
@@ -45,4 +57,6 @@ private:
 
 	// 当前状态
 	bool bIsEatable = false;
+	// 生存状态
+	
 };
