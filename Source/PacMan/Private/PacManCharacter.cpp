@@ -65,6 +65,10 @@ void APacManCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APacManCharacter::MoveXAxis(float AxisValue)
 {
+	if (GameMode->GetCurrentState() != EGameState::EPlaying)
+	{
+		return;
+	}
 	current.X = AxisValue;
 	// 实际控制移动的函数
 	AddMovementInput(current);
@@ -72,6 +76,10 @@ void APacManCharacter::MoveXAxis(float AxisValue)
 
 void APacManCharacter::MoveYAxis(float AxisValue)
 {
+	if (GameMode->GetCurrentState() != EGameState::EPlaying)
+	{
+		return;
+	}
 	current.Y = AxisValue;
 	AddMovementInput(current);
 }
@@ -84,6 +92,17 @@ void APacManCharacter::OnCollision(UPrimitiveComponent *HitComp, AActor *OtherAc
 		if (OtherActor->IsA(ACollectables::StaticClass()))
 		{
 			OtherActor->Destroy();
+
+			ACollectables* Bean = Cast<ACollectables>(OtherActor);
+
+			if (Bean)
+			{
+				// 如果是大力丸, 通过GameMode设置敌人可食用
+				if (Bean->bIsSuper)
+				{
+					this->GameMode->SetEnemyCanEatable();
+				}
+			}
 			CollectablesToEat--;
 			if (CollectablesToEat == 0)
 			{

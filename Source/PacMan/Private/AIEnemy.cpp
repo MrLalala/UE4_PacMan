@@ -32,7 +32,7 @@ void AAIEnemy::SearchNewPoint()
 	
 	if (Navigation)
 	{
-		const float SearchRedius = 1000.0f;
+		const float SearchRedius = 10000.0f;
 		FNavLocation RandomPt;
 		const bool bFound = Navigation->GetRandomReachablePointInRadius(Bot->GetActorLocation(), SearchRedius, RandomPt);
 		if (bFound)

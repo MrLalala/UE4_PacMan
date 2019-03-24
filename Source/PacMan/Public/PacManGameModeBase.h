@@ -19,6 +19,7 @@ enum class EGameState: short
 	EGameOver
 };
 
+class AEnemy;
 
 UCLASS()
 class PACMAN_API APacManGameModeBase : public AGameModeBase
@@ -29,8 +30,13 @@ public:
 	virtual void BeginPlay() override;
 	EGameState GetCurrentState() const;
 	void SetCurrentState(EGameState);
+
+	// 设置敌人为可吃
+	void SetEnemyCanEatable();
 private:
 	EGameState GameState;
+
+	TArray<AEnemy*> Enemys;
 };
 
 FORCEINLINE EGameState APacManGameModeBase::GetCurrentState() const

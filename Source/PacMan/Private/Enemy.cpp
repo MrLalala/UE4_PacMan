@@ -9,6 +9,7 @@
 #include "Classes/Materials/Material.h"
 #include "Engine/Public/TimerManager.h"
 #include "Classes/GameFramework/CharacterMovementComponent.h"
+#include "AIEnemy.h"
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -41,6 +42,8 @@ AEnemy::AEnemy()
 	{
 		EatableMaterial = M_Etable.Object;
 	}
+
+	this->AIControllerClass = AAIEnemy::StaticClass();
 }
 
 void AEnemy::SetEtable()
@@ -95,7 +98,22 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::SetMove(bool bMoveIt)
 {
-
+	AAIEnemy* AI = Cast<AAIEnemy>(this->GetController());
+	if (AI)
+	{
+		if (bMoveIt)
+		{
+			AI->SearchNewPoint();
+		}
+		else
+		{
+			AI->StopMove();
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Error AIController"));
+	}
 }
 
 void AEnemy::Killed()
