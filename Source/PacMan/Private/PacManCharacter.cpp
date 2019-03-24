@@ -108,7 +108,7 @@ void APacManCharacter::OnCollision(UPrimitiveComponent *HitComp, AActor *OtherAc
 			{
 				GameMode->SetCurrentState(EGameState::EWin);
 			}
-			UE_LOG(LogTemp, Warning, TEXT("Remain:%d"), CollectablesToEat);
+			//UE_LOG(LogTemp, Warning, TEXT("Remain:%d"), CollectablesToEat);
 		}
 	}
 	
@@ -116,8 +116,12 @@ void APacManCharacter::OnCollision(UPrimitiveComponent *HitComp, AActor *OtherAc
 
 void APacManCharacter::_Restart()
 {
-	GetWorld()->GetFirstPlayerController()->ConsoleCommand(TEXT("RestartLevel"));
-	UE_LOG(LogTemp, Warning, TEXT("Restart Click"));
+	EGameState State = this->GameMode->GetCurrentState();
+	if (State == EGameState::EWin || State == EGameState::EGameOver)
+	{
+		GetWorld()->GetFirstPlayerController()->ConsoleCommand(TEXT("RestartLevel"));
+		UE_LOG(LogTemp, Warning, TEXT("Restart Click"));
+	}
 }
 
 void APacManCharacter::_Pause()

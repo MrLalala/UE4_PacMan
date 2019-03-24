@@ -42,8 +42,11 @@ AEnemy::AEnemy()
 	{
 		EatableMaterial = M_Etable.Object;
 	}
-
+	// 绑定控制类
 	this->AIControllerClass = AAIEnemy::StaticClass();
+
+	// 开启体积碰撞事件
+	this->SetActorEnableCollision(true);
 }
 
 void AEnemy::SetEtable()
@@ -82,6 +85,12 @@ void AEnemy::BeginPlay()
 	DefaultMaterial = EnemyBody->GetMaterial(0);
 	
 	//SetEtable();
+
+	// 绑定碰撞事件
+	this->GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnCollision);
+
+	// 设置初始速度
+	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
 }
 
 // Called every frame
@@ -123,7 +132,11 @@ void AEnemy::Killed()
 		return;
 	}
 	bIsDied = true;
-	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+
+	// 回家函数
+	AAIEnemy* AI = Cast<AAIEnemy>(this->GetController());
+	AI->GoHome();
 }
 
 void AEnemy::ReArm()
@@ -134,10 +147,15 @@ void AEnemy::ReArm()
 	}
 	bIsDied = false;
 	SetUneatable();
+
+	// 重新开始寻路
+	SetMove(true);
 }
 
 void AEnemy::OnCollision(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Collision"));
 	if (OtherActor != nullptr && OtherActor->IsA(APacManCharacter::StaticClass()))
 	{
 		if (bIsEatable)

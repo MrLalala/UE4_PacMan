@@ -7,6 +7,7 @@
 #include "AIEnemy.generated.h"
 
 class AEnemy;
+class APacManGameModeBase;
 /**
  * 
  */
@@ -34,4 +35,6 @@ private:
 	FVector HomeLocation;
 
 	FTimerHandle DeadTime;
+
+	APacManGameModeBase* GameMode;
 };

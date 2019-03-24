@@ -4,7 +4,9 @@
 #include "Enemy.h"
 #include "NavigationSystem/Public/NavigationSystem.h"
 #include "Engine/Public/TimerManager.h"
-//#include "Public/NavigationSystem.h"
+#include "PacManGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "PacManGameModeBase.h"
 
 void AAIEnemy::Possess(APawn* InPawn)
 {
@@ -15,12 +17,15 @@ void AAIEnemy::Possess(APawn* InPawn)
 	// 获取初始位置
 	HomeLocation = Bot->GetActorLocation();
 
+	// 获取当前GameMode
+	this->GameMode = Cast<APacManGameModeBase>(UGameplayStatics::GetGameMode(this));
+
 	SearchNewPoint();
 }
 
 void AAIEnemy::OnMoveCompleted(FAIRequestID RequstId, const FPathFollowingResult & Result)
 {
-	if (!Bot->bIsDied)
+	if (!Bot->bIsDied && this->GameMode->GetCurrentState() == EGameState::EPlaying)
 	{
 		SearchNewPoint();
 	}
@@ -57,4 +62,6 @@ void AAIEnemy::ReArm()
 void AAIEnemy::StopMove()
 {
 	StopMovement();
+	// 强制暂停
+	//this->MoveToLocation(this->Bot->GetActorLocation());
 }

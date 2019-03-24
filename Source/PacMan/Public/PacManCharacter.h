@@ -52,16 +52,14 @@ public:
 
 	// 死亡处理
 	void Killed();
-
+	// 生命值
+	int Lives;
+	// 剩余食物数
+	int CollectablesToEat = 0;
 private:
 	// 当前速度
 	FVector current;
 	APacManGameModeBase* GameMode;
-
-	// 剩余食物数
-	int CollectablesToEat = 0;
-	// 生命值
-	int Lives;
 	// 出生点
 	FVector StartPos;
 };

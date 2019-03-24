@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+
+
 UCLASS()
 class PACMAN_API AEnemy : public ACharacter
 {
@@ -57,6 +59,7 @@ private:
 
 	// 当前状态
 	bool bIsEatable = false;
-	// 生存状态
+
+	
 	
 };
